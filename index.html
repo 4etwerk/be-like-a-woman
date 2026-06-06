@@ -9,222 +9,327 @@
 <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant:ital,wght@0,300;1,300;1,400&display=swap" rel="stylesheet">
 
 <style>
-*,*::before,*::after{
-box-sizing:border-box;
-margin:0;
-padding:0;
+
+*, *::before, *::after {
+ box-sizing:border-box;
+ margin:0;
+ padding:0;
 }
 
-:root{
---amber:#d4894a;
---cream:#fff2d8;
---rust:#8a3e12;
+:root {
+ --amber:#d4894a;
+ --cream:#fff2d8;
+ --rust:#8a3e12;
 }
 
-body{
-overflow:hidden;
-background:#000;
-font-family:"Cormorant",serif;
-touch-action:none;
-user-select:none;
--webkit-user-select:none;
+body {
+ overflow:hidden;
+ background:#000;
+ font-family:"Cormorant",serif;
+ touch-action:none;
+ user-select:none;
+ -webkit-user-select:none;
 }
 
-canvas{
-position:absolute;
-inset:0;
-display:block;
+canvas {
+ position:absolute;
+ inset:0;
+ display:block;
 }
 
-#hint{
-position:fixed;
-bottom:70px;
-width:100%;
-text-align:center;
-font-size:clamp(12px,3.5vw,17px);
-letter-spacing:.2em;
-color:rgba(255,235,195,.4);
-font-style:italic;
-pointer-events:none;
-transition:opacity 1.5s;
-z-index:20;
+#hint {
+ position:fixed;
+ bottom:70px;
+ width:100%;
+ text-align:center;
+ font-size:clamp(12px,3.5vw,17px);
+ letter-spacing:.2em;
+ color:rgba(255,235,195,.4);
+ font-style:italic;
+ pointer-events:none;
+ transition:opacity 1.5s;
+ z-index:20;
 }
 
-#hint.gone{
-opacity:0;
+#hint.gone {
+ opacity:0;
 }
 
-#lyric-wrap{
-position:absolute;
-top:18%;
-width:100%;
-text-align:center;
-pointer-events:none;
-z-index:20;
-padding:0 16px;
+#lyric-wrap {
+ position:absolute;
+ top:18%;
+ width:100%;
+ text-align:center;
+ pointer-events:none;
+ z-index:20;
+ padding:0 16px;
 }
 
-#lyric{
-display:inline-block;
-font-family:"Italiana",serif;
-font-size:clamp(26px,6.5vw,64px);
-color:var(--cream);
-text-shadow:
-0 0 18px var(--amber),
-0 0 55px var(--rust),
-0 0 120px rgba(120,45,5,.4);
-opacity:0;
-transform:translateY(22px) scale(.97);
-transition:
-opacity 1.1s cubic-bezier(.22,1,.36,1),
-transform 1.1s cubic-bezier(.22,1,.36,1);
-letter-spacing:.08em;
-line-height:1.25;
+
+#lyric {
+
+ display:inline-block;
+ font-family:"Italiana",serif;
+ font-size:clamp(26px,6.5vw,64px);
+
+ color:var(--cream);
+
+ text-shadow:
+ 0 0 18px var(--amber),
+ 0 0 55px var(--rust),
+ 0 0 120px rgba(120,45,5,.4);
+
+ opacity:0;
+
+ transform:
+ translateY(22px)
+ scale(.97);
+
+ transition:
+ opacity 1.1s cubic-bezier(.22,1,.36,1),
+ transform 1.1s cubic-bezier(.22,1,.36,1);
+
+ letter-spacing:.08em;
+ line-height:1.25;
 }
 
-#lyric.show{
-opacity:1;
-transform:translateY(0) scale(1);
+
+#lyric.show {
+
+ opacity:1;
+
+ transform:
+ translateY(0)
+ scale(1);
+
 }
 
-#next{
-display:block;
-margin-top:16px;
-font-style:italic;
-font-size:clamp(13px,3vw,26px);
-color:rgba(255,235,195,.25);
+
+#next {
+
+ display:block;
+
+ margin-top:16px;
+
+ font-family:"Cormorant",serif;
+
+ font-style:italic;
+
+ font-size:
+ clamp(13px,3vw,26px);
+
+ color:
+ rgba(255,235,195,.25);
+
+ letter-spacing:.1em;
+
 }
 
-#controls{
-position:fixed;
-bottom:28px;
-left:50%;
-transform:translateX(-50%);
-display:flex;
-gap:16px;
-z-index:30;
-opacity:0;
-transition:opacity 1s;
+
+
+
+#controls {
+
+ position:fixed;
+
+ bottom:28px;
+
+ left:50%;
+
+ transform:
+ translateX(-50%);
+
+ display:flex;
+
+ gap:16px;
+
+ z-index:30;
+
+ opacity:0;
+
+ transition:
+ opacity 1s;
+
 }
 
-#controls.visible{
-opacity:1;
+
+#controls.visible {
+
+ opacity:1;
+
 }
 
-.btn{
-width:56px;
-height:56px;
-border-radius:50%;
-border:1px solid rgba(210,150,70,.35);
-background:rgba(0,0,0,.55);
-color:rgba(255,220,160,.7);
-font-size:22px;
-display:flex;
-align-items:center;
-justify-content:center;
-touch-action:manipulation;
+
+
+.btn {
+
+ width:56px;
+
+ height:56px;
+
+ border-radius:50%;
+
+ border:
+ 1px solid rgba(210,150,70,.35);
+
+ background:
+ rgba(0,0,0,.55);
+
+ backdrop-filter:blur(6px);
+
+ color:
+ rgba(255,220,160,.7);
+
+ font-size:22px;
+
+ display:flex;
+
+ align-items:center;
+
+ justify-content:center;
+
+ touch-action:manipulation;
+
 }
 
-#vignette{
-position:fixed;
-inset:0;
-pointer-events:none;
-z-index:10;
-background:radial-gradient(
-ellipse at 50% 60%,
-transparent 35%,
-rgba(0,0,0,.68) 100%);
+
+.btn:active {
+
+ transform:scale(.9);
+
+ border-color:
+ var(--amber);
+
 }
+
+
+
+#vignette {
+
+ position:fixed;
+
+ inset:0;
+
+ pointer-events:none;
+
+ z-index:10;
+
+ background:
+ radial-gradient(
+ ellipse at 50% 60%,
+ transparent 35%,
+ rgba(0,0,0,.68) 100%
+ );
+
+}
+
 
 </style>
+
 </head>
 
 
 <body>
 
+
 <canvas id="canvas"></canvas>
 
 <div id="vignette"></div>
 
+
 <div id="lyric-wrap">
+
 <span id="lyric"></span>
+
 <span id="next"></span>
+
 </div>
 
-<div id="hint">tap anywhere to play</div>
+
+<div id="hint">
+
+tap anywhere to play
+
+</div>
+
 
 <div id="controls">
+
 <div class="btn" id="btn-left">◀</div>
+
 <div class="btn" id="btn-gas">▲</div>
+
 <div class="btn" id="btn-moon">☽</div>
+
 <div class="btn" id="btn-right">▶</div>
+
 </div>
 
-<audio id="music"
+
+<audio 
+id="music"
 src="music.mp3"
 preload="auto"
-playsinline></audio>
+playsinline>
+</audio>
 
 
 <script>
 
-const canvas=document.getElementById("canvas");
-const ctx=canvas.getContext("2d");
 
-const lyricEl=document.getElementById("lyric");
-const nextEl=document.getElementById("next");
-const hintEl=document.getElementById("hint");
-const controls=document.getElementById("controls");
-const music=document.getElementById("music");
+const canvas =
+document.getElementById("canvas");
+
+
+const ctx =
+canvas.getContext("2d");
+
+
+const lyricEl =
+document.getElementById("lyric");
+
+
+const nextEl =
+document.getElementById("next");
+
+
+const hintEl =
+document.getElementById("hint");
+
+
+const controls =
+document.getElementById("controls");
+
+
+const music =
+document.getElementById("music");
+
 
 
 function resize(){
-canvas.width=innerWidth;
-canvas.height=innerHeight;
+
+ canvas.width=innerWidth;
+
+ canvas.height=innerHeight;
+
 }
 
+
 resize();
-window.addEventListener("resize",resize);
+
+
+window.addEventListener(
+"resize",
+resize
+);
+
 
 
 function getElapsed(){
-return music.currentTime||0;
-}
 
-
-let started=false;
-
-
-async function start(){
-
-if(started)return;
-
-try{
-
-await music.play();
-
-started=true;
-
-hintEl.classList.add("gone");
-controls.classList.add("visible");
+ return music.currentTime || 0;
 
 }
-
-catch(e){
-
-hintEl.textContent="tap again to play";
-
-}
-
-}
-
-
-document.body.addEventListener("click",start);
-document.body.addEventListener(
-"touchend",
-start,
-{passive:true}
-);
 const lyrics=[
 {t:25,text:"Show me the light"},
 {t:28,text:"Tell me a story"},
@@ -271,19 +376,26 @@ const lyrics=[
 
 let lastText="";
 
+
 function updateLyrics(){
 
-let time=getElapsed();
+const t=getElapsed();
+
+const instrumental =
+t>144 && t<186;
+
 
 let now="";
-let next="";
+let nxt="";
+
 
 for(let i=0;i<lyrics.length;i++){
 
-if(time>=lyrics[i].t){
+if(t>=lyrics[i].t){
 
 now=lyrics[i].text;
-next=lyrics[i+1]?.text||"";
+
+nxt=lyrics[i+1]?.text || "";
 
 }
 
@@ -294,128 +406,306 @@ if(now!==lastText){
 
 lyricEl.classList.remove("show");
 
+
+const cap=now;
+
+
 setTimeout(()=>{
 
-lyricEl.textContent=now;
 
-if(now){
+lyricEl.textContent=cap;
+
+
+if(cap && !instrumental){
+
 lyricEl.classList.add("show");
+
 }
 
+
 },280);
+
 
 lastText=now;
 
 }
 
 
-nextEl.textContent=next;
+
+nextEl.textContent =
+(!instrumental && nxt)
+?nxt:"";
+
+
+nextEl.style.opacity =
+(!instrumental && nxt)
+?"1":"0";
+
+
+if(instrumental){
+
+lyricEl.classList.remove("show");
+
+}
 
 }
 
 
 
 let speed=1;
-let carMove=0;
+
+let speedTarget=1;
+
+let carOffsetX=0;
+
+let carOffsetTarget=0;
+
+let shakeAmt=0;
+
 let skyMode=0;
 
+let moonFlash=0;
 
-const skies=[
-["#02020c","#100703","#000"],
-["#04020f","#1a0630","#000"],
-["#050112","#6b1a10","#150200"]
-];
+let steerLeft=false;
+
+let steerRight=false;
+
+
+
+function doGas(){
+
+speedTarget =
+Math.min(
+speedTarget+1.5,
+7
+);
+
+
+shakeAmt=9;
+
+
+setTimeout(()=>{
+
+
+speedTarget =
+Math.max(
+1,
+speedTarget-1.5
+);
+
+
+},2000);
+
+}
+
+
+
+
+function toggleSky(){
+
+skyMode =
+(skyMode+1)%3;
+
+
+moonFlash=1;
+
+}
+
+
 
 
 document
 .getElementById("btn-gas")
-.onclick=e=>{
+.addEventListener(
+"click",
+e=>{
 
 e.stopPropagation();
-speed=5;
 
-setTimeout(()=>{
-speed=1;
-},1500);
+doGas();
 
-};
+}
+);
+
 
 
 document
 .getElementById("btn-moon")
-.onclick=e=>{
+.addEventListener(
+"click",
+e=>{
 
 e.stopPropagation();
 
-skyMode++;
+toggleSky();
 
-if(skyMode>2){
-skyMode=0;
 }
-
-};
-
-
-let left=false;
-let right=false;
+);
 
 
-function steer(btn,side){
 
-btn.onpointerdown=e=>{
+
+function attachSteer(btn,dir){
+
+
+btn.addEventListener(
+"pointerdown",
+e=>{
 
 e.stopPropagation();
 
-if(side==="L")left=true;
-else right=true;
+if(dir==="L"){
 
-};
+steerLeft=true;
+
+}
+
+else{
+
+steerRight=true;
+
+}
+
+}
+);
 
 
-btn.onpointerup=()=>{
 
-left=false;
-right=false;
+btn.addEventListener(
+"pointerup",
+()=>{
 
-};
+steerLeft=false;
+
+steerRight=false;
+
+}
+);
+
+
+btn.addEventListener(
+"pointerleave",
+()=>{
+
+steerLeft=false;
+
+steerRight=false;
+
+}
+);
 
 }
 
 
-steer(
+
+attachSteer(
 document.getElementById("btn-left"),
 "L"
 );
 
-steer(
+
+attachSteer(
 document.getElementById("btn-right"),
 "R"
 );
+
+
 
 
 document.addEventListener(
 "mousemove",
 e=>{
 
-carMove=
-(e.clientX-innerWidth/2)/10;
+
+const cx=
+innerWidth/2;
+
+
+carOffsetTarget =
+((e.clientX-cx)/cx)*60;
+
 
 }
 );
 
 
 
-const stars=
-Array.from(
-{length:320},
-()=>({
 
-x:Math.random()*innerWidth,
-y:Math.random()*innerHeight*.5,
-r:Math.random()*1.5
 
-})
+let started=false;
+
+
+async function start(){
+
+
+if(started)return;
+
+
+try{
+
+
+await music.play();
+
+
+started=true;
+
+
+hintEl.classList.add("gone");
+
+
+controls.classList.add("visible");
+
+
+}
+
+
+catch(e){
+
+
+hintEl.textContent=
+"tap again to play";
+
+
+}
+
+
+}
+
+
+
+document.body.addEventListener(
+"click",
+start
 );
+
+
+document.body.addEventListener(
+"touchend",
+start,
+{passive:true}
+);
+const stars =
+Array.from({length:320},()=>({
+x:Math.random()*innerWidth,
+y:Math.random()*innerHeight*.52,
+r:Math.random()*1.5+.2,
+phase:Math.random()*Math.PI*2,
+speed:.018+Math.random()*.025
+}));
+
+
+const lamps =
+Array.from(
+{length:22},
+(_,i)=>({y:i*80})
+);
+
+
+const skies=[
+["#02020c","#100703","#1c0a04","#000"],
+["#04020f","#0e0420","#1a0630","#000"],
+["#050112","#2a0a20","#6b1a10","#150200"]
+];
 
 
 let frame=0;
@@ -425,28 +715,95 @@ function draw(){
 
 frame++;
 
-if(left)carMove-=2;
-if(right)carMove+=2;
+
+speed+=(speedTarget-speed)*.055;
+
+shakeAmt*=.87;
+
+
+if(moonFlash>0){
+
+moonFlash-=.045;
+
+}
+
+
+if(steerLeft){
+
+carOffsetTarget=
+Math.max(
+carOffsetTarget-3,
+-60
+);
+
+}
+
+
+if(steerRight){
+
+carOffsetTarget=
+Math.min(
+carOffsetTarget+3,
+60
+);
+
+}
+
+
+if(!steerLeft&&!steerRight){
+
+carOffsetTarget*=.92;
+
+}
+
+
+
+carOffsetX+=
+(carOffsetTarget-carOffsetX)*.07;
+
+
 
 const W=canvas.width;
+
 const H=canvas.height;
 
 
-let bg=ctx.createLinearGradient(0,0,0,H);
 
-bg.addColorStop(0,skies[skyMode][0]);
-bg.addColorStop(.5,skies[skyMode][1]);
-bg.addColorStop(1,skies[skyMode][2]);
+const sky=
+ctx.createLinearGradient(
+0,0,0,H
+);
 
-ctx.fillStyle=bg;
+
+let pal=skies[skyMode];
+
+
+sky.addColorStop(0,pal[0]);
+sky.addColorStop(.42,pal[1]);
+sky.addColorStop(.72,pal[2]);
+sky.addColorStop(1,pal[3]);
+
+
+ctx.fillStyle=sky;
+
 ctx.fillRect(0,0,W,H);
+
+
+
+
+for(const s of stars){
+
+s.phase+=s.speed;
+
+ctx.globalAlpha=
+.4+Math.sin(s.phase)*.6;
 
 
 ctx.fillStyle="#fff8ee";
 
-stars.forEach(s=>{
 
 ctx.beginPath();
+
 ctx.arc(
 s.x,
 s.y,
@@ -457,13 +814,20 @@ Math.PI*2
 
 ctx.fill();
 
-});
+}
 
+
+ctx.globalAlpha=1;
+
+
+
+
+ctx.shadowBlur=60;
+
+ctx.shadowColor="#ffe0a0";
 
 ctx.fillStyle="#fff4d6";
 
-ctx.shadowBlur=60;
-ctx.shadowColor="#ffe0a0";
 
 ctx.beginPath();
 
@@ -475,9 +839,38 @@ H*.18,
 Math.PI*2
 );
 
+
 ctx.fill();
 
 ctx.shadowBlur=0;
+
+
+
+
+ctx.fillStyle="#06030a";
+
+ctx.beginPath();
+
+ctx.moveTo(0,H*.55);
+
+
+for(let x=0;x<=W;x+=40){
+
+ctx.lineTo(
+x,
+H*.52-
+Math.sin(x*.02)*20
+);
+
+}
+
+
+ctx.lineTo(W,H);
+
+ctx.lineTo(0,H);
+
+ctx.fill();
+
 
 
 
@@ -485,43 +878,86 @@ ctx.fillStyle="#060403";
 
 ctx.beginPath();
 
-ctx.moveTo(W*.15,H);
-ctx.lineTo(W*.43,H*.55);
-ctx.lineTo(W*.57,H*.55);
-ctx.lineTo(W*.85,H);
+
+ctx.moveTo(W*.13,H);
+
+ctx.lineTo(W*.42,H*.54);
+
+ctx.lineTo(W*.58,H*.54);
+
+ctx.lineTo(W*.87,H);
+
 
 ctx.fill();
+
 
 
 
 ctx.strokeStyle=
 "rgba(255,200,100,.5)";
 
+
 ctx.lineWidth=3;
 
+
 ctx.setLineDash([50,60]);
+
 
 ctx.lineDashOffset=
 -(frame*7*speed)%110;
 
+
 ctx.beginPath();
 
-ctx.moveTo(W/2,H*.56);
+ctx.moveTo(W/2,H*.55);
+
 ctx.lineTo(W/2,H);
 
 ctx.stroke();
+
 
 ctx.setLineDash([]);
 
 
 
-let carX=W/2+carMove;
-let carY=H*.77;
+
+let carX=
+W/2+carOffsetX;
+
+
+let carY=
+H*.77;
+
+
+ctx.fillStyle=
+"rgba(0,0,0,.65)";
+
+
+ctx.beginPath();
+
+
+ctx.ellipse(
+carX,
+carY+75,
+115,
+22,
+0,
+0,
+Math.PI*2
+);
+
+
+ctx.fill();
+
+
+
 
 
 ctx.fillStyle="#0a0808";
 
+
 ctx.beginPath();
+
 
 ctx.roundRect(
 carX-100,
@@ -531,13 +967,40 @@ carY,
 26
 );
 
+
 ctx.fill();
+
+
+
+
+
+ctx.fillStyle="#090707";
+
+
+ctx.beginPath();
+
+
+ctx.roundRect(
+carX-58,
+carY-48,
+116,
+62,
+22
+);
+
+
+ctx.fill();
+
+
+
 
 
 ctx.fillStyle=
 "rgba(90,65,45,.55)";
 
+
 ctx.beginPath();
+
 
 ctx.roundRect(
 carX-46,
@@ -547,7 +1010,97 @@ carY-38,
 10
 );
 
+
 ctx.fill();
+
+
+
+
+
+
+ctx.shadowBlur=28;
+
+ctx.shadowColor=
+"rgba(220,20,20,.9)";
+
+
+ctx.fillStyle=
+"rgba(200,18,18,.9)";
+
+
+ctx.beginPath();
+
+ctx.roundRect(
+carX-82,
+carY+38,
+32,
+14,
+4
+);
+
+ctx.fill();
+
+
+
+ctx.beginPath();
+
+ctx.roundRect(
+carX+50,
+carY+38,
+32,
+14,
+4
+);
+
+ctx.fill();
+
+
+ctx.shadowBlur=0;
+
+
+
+
+
+
+ctx.shadowBlur=25;
+
+ctx.shadowColor="#ffe8c0";
+
+ctx.fillStyle="#fff5e0";
+
+
+ctx.beginPath();
+
+ctx.roundRect(
+carX-82,
+carY+16,
+22,
+10,
+4
+);
+
+
+ctx.fill();
+
+
+
+ctx.beginPath();
+
+ctx.roundRect(
+carX+60,
+carY+16,
+22,
+10,
+4
+);
+
+
+ctx.fill();
+
+
+ctx.shadowBlur=0;
+
+
 
 
 updateLyrics();
@@ -558,10 +1111,75 @@ requestAnimationFrame(draw);
 }
 
 
+
 draw();
 
+
+
+
+if(!CanvasRenderingContext2D.prototype.roundRect){
+
+CanvasRenderingContext2D.prototype.roundRect=
+function(x,y,w,h,r){
+
+
+this.moveTo(x+r,y);
+
+this.lineTo(x+w-r,y);
+
+this.quadraticCurveTo(
+x+w,y,
+x+w,y+r
+);
+
+
+this.lineTo(
+x+w,
+y+h-r
+);
+
+
+this.quadraticCurveTo(
+x+w,y+h,
+x+w-r,y+h
+);
+
+
+this.lineTo(
+x+r,
+y+h
+);
+
+
+this.quadraticCurveTo(
+x,y+h,
+x,y+h-r
+);
+
+
+this.lineTo(
+x,
+y+r
+);
+
+
+this.quadraticCurveTo(
+x,y,
+x+r,y
+);
+
+
+this.closePath();
+
+
+return this;
+
+};
+
+}
 
 </script>
 
 </body>
+
 </html>
