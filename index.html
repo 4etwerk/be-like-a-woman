@@ -292,24 +292,11 @@ let started = false;
 function start() {
   if (started) return;
   started = true;
-  
-  // Сначала разблокируем аудио контекст, потом запускаем
-  const playPromise = music.play();
-  if (playPromise !== undefined) {
-    playPromise.then(() => {
-      // Успешно
-    }).catch(err => {
-      console.log('Audio play failed:', err);
-      // На iOS может потребоваться второй вызов после взаимодействия
-      setTimeout(() => music.play().catch(()=>{}), 100);
-    });
-  }
-  
+  const p = music.play();
+  if (p !== undefined) p.catch(() => setTimeout(() => music.play().catch(() => {}), 50));
   hintEl.classList.add('gone');
   controls.classList.add('visible');
 }
-
-// Обработчики для мобильных: pointerdown + touchend для надёжности
 document.body.addEventListener('pointerdown', start, { once: true });
 document.body.addEventListener('touchend', start, { once: true, passive: false });
 document.body.addEventListener('click', start, { once: true });
